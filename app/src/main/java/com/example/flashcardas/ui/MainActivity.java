@@ -1,39 +1,28 @@
 package com.example.flashcardas.ui;
 
 import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 import com.example.flashcardas.R;
-import com.example.flashcardas.viewmodel.FlashcardViewModel;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
-    private FlashcardViewModel flashcardViewModel;
-    private RecyclerView recyclerView;
-    private FlashcardAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        // Ottieni il NavController dal nav_host_fragment
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 
-        flashcardViewModel = new ViewModelProvider(this).get(FlashcardViewModel.class);
+        // Trova il BottomNavigationView
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
 
-        flashcardViewModel.getFlashcards().observe(this, flashcards -> {
-            adapter = new FlashcardAdapter(flashcards);
-            recyclerView.setAdapter(adapter);
-        });
-
-        findViewById(R.id.addFlashcardButton).setOnClickListener(view -> {
-            // Aprire dialog per inserire nuova parola
-            flashcardViewModel.addFlashcard("Hello", "Ciao");
-        });
+        // Associa il BottomNavigationView al NavController
+        NavigationUI.setupWithNavController(bottomNav, navController);
     }
 }
 
