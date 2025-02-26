@@ -1,28 +1,67 @@
 package com.example.flashcardas.ui;
 
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
-import com.example.flashcardas.R;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.example.flashcardas.R;
+import com.example.flashcardas.viewmodel.MainViewModel;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
+
+public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
+
+    private MainViewModel mainViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Ottieni il NavController dal nav_host_fragment
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        // Inizializza ViewModel
+        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
-        // Trova il BottomNavigationView
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        // Inizializza BottomNavigationView
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_bar);
+        bottomNavigationView.setOnItemSelectedListener(this);  // Usa il nuovo listener
 
-        // Associa il BottomNavigationView al NavController
-        NavigationUI.setupWithNavController(bottomNav, navController);
+        // Osserva i cambiamenti del Fragment corrente
+        mainViewModel.getCurrentFragment().observe(this, this::loadFragment);
+
+        // Mostra il Fragment di default se è la prima creazione
+        if (savedInstanceState == null) {
+            mainViewModel.setCurrentFragment(new HomeFragment());
+            bottomNavigationView.setSelectedItemId(R.id.nav_home);  // Imposta l'item selezionato di default
+        }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        String title = item.getTitle().toString();
+
+        switch (title) {
+            case "Home":
+                mainViewModel.setCurrentFragment(new HomeFragment());
+                return true;
+            case "Training":
+                mainViewModel.setCurrentFragment(new TrainingFragment());
+                return true;
+            case "Manage":
+                mainViewModel.setCurrentFragment(new ManageCollectionsFragment());
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private void loadFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit();
     }
 }
 
