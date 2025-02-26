@@ -1,4 +1,4 @@
-package com.example.flashcardas.ui;
+package com.example.flashcardas.ui.main;
 
 
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.example.flashcardas.R;
 import com.example.flashcardas.model.Flashcard;
+import com.example.flashcardas.ui.adapter.FlashcardAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

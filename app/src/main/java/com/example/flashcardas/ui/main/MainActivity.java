@@ -1,4 +1,4 @@
-package com.example.flashcardas.ui;
+package com.example.flashcardas.ui.main;
 
 import android.os.Bundle;
 import android.view.MenuItem;

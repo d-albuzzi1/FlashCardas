@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.flashcardas.ui.HomeFragment;
+import com.example.flashcardas.ui.main.HomeFragment;
 
 public class MainViewModel extends ViewModel {
 

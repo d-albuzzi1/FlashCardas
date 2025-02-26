@@ -1,4 +1,4 @@
-package com.example.flashcardas.ui;
+package com.example.flashcardas.ui.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.viewpager2.widget.ViewPager2;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flashcardas.R;

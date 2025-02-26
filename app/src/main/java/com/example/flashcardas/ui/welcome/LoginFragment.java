@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.flashcardas.R;
-import com.example.flashcardas.ui.MainActivity;
+import com.example.flashcardas.ui.main.MainActivity;
 import com.example.flashcardas.viewmodel.AuthViewModel;
 
 public class LoginFragment extends Fragment {
