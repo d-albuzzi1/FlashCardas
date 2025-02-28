@@ -16,10 +16,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.flashcardas.R;
 import com.example.flashcardas.ui.main.MainActivity;
-import com.example.flashcardas.viewmodel.AuthViewModel;
+import com.example.flashcardas.viewmodel.MainViewModel;
 
 public class LoginFragment extends Fragment {
-    private AuthViewModel authViewModel;
+    private MainViewModel mainViewModel;
     private EditText emailInput, passwordInput;
 
     @Nullable
@@ -27,13 +27,15 @@ public class LoginFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
-        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
         emailInput = view.findViewById(R.id.emailInput);
         passwordInput = view.findViewById(R.id.passwordInput);
         Button loginButton = view.findViewById(R.id.loginButton);
+        Button registerButton = view.findViewById(R.id.registerButton);
 
         loginButton.setOnClickListener(v -> loginUser());
+        registerButton.setOnClickListener(v -> loadRegisterFragment());
 
         observeViewModel();
 
@@ -49,22 +51,30 @@ public class LoginFragment extends Fragment {
             return;
         }
 
-        authViewModel.loginUser(email, password);
+        mainViewModel.loginUser(email, password);
     }
+
+    private void loadRegisterFragment() {
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.authFragmentContainer, new RegisterFragment())
+                .addToBackStack(null)
+                .commit();
+    }
+
 
     private void observeViewModel() {
 
-        authViewModel.getLoginSuccess().observe(getViewLifecycleOwner(), success -> {
+        mainViewModel.getLoginSuccess().observe(getViewLifecycleOwner(), success -> {
             if (success) {
 
                 Toast.makeText(getActivity(), "Login riuscito!", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getActivity(), MainActivity.class));
-                getActivity().finish(); // Chiude l'activity di login
+                getActivity().finish();
             }
         });
 
 
-        authViewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
+        mainViewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
             if (error != null) {
                 Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
             }

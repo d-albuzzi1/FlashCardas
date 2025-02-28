@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
 import com.example.flashcardas.R;
 
 public class WelcomeActivity extends AppCompatActivity {
@@ -13,16 +15,23 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        Button loginButton = findViewById(R.id.loginButton);
-        Button registerButton = findViewById(R.id.registerButton);
+        String fragmentType = getIntent().getStringExtra("FRAGMENT_TYPE");
 
-        loginButton.setOnClickListener(v -> openAuthActivity("login"));
-        registerButton.setOnClickListener(v -> openAuthActivity("register"));
+        if (fragmentType != null) {
+            if (fragmentType.equals("login")) {
+                loadFragment(new LoginFragment());
+            } else if (fragmentType.equals("register")) {
+                loadFragment(new RegisterFragment());
+            }
+        }else{
+           loadFragment(new LoginFragment());
+        }
+
     }
 
-    private void openAuthActivity(String fragmentType) {
-        Intent intent = new Intent(this, AuthActivity.class);
-        intent.putExtra("FRAGMENT_TYPE", fragmentType);
-        startActivity(intent);
+    private void loadFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.authFragmentContainer, fragment)
+                .commit();
     }
 }
