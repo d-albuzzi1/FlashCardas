@@ -1,5 +1,6 @@
 package com.example.flashcardas.ui.welcome;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +15,11 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.flashcardas.R;
-import com.example.flashcardas.viewmodel.AuthViewModel;
-import com.example.flashcardas.viewmodel.MainViewModel;
+import com.example.flashcardas.ui.main.MainActivity;
+import com.example.flashcardas.viewmodel.WelcomeViewModel;
 
 public class RegisterFragment extends Fragment {
-    private MainViewModel mainViewModel;
+    private WelcomeViewModel welcomeViewModel;
     private EditText emailInput, passwordInput, confirmPasswordInput;
 
     @Nullable
@@ -26,19 +27,22 @@ public class RegisterFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_register, container, false);
 
-        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        welcomeViewModel = new ViewModelProvider(this).get(WelcomeViewModel.class);
 
         emailInput = view.findViewById(R.id.emailInput);
         passwordInput = view.findViewById(R.id.passwordInput);
         confirmPasswordInput = view.findViewById(R.id.confirmPasswordInput);
         Button registerButton = view.findViewById(R.id.registerButton);
+        Button backButton = view.findViewById(R.id.backButton);
 
         registerButton.setOnClickListener(v -> {
             String email = emailInput.getText().toString().trim();
             String password = passwordInput.getText().toString().trim();
             String confirmPassword = confirmPasswordInput.getText().toString().trim();
-            mainViewModel.registerUser(email, password, confirmPassword);
+            welcomeViewModel.registerUser(email, password, confirmPassword);
         });
+
+        backButton.setOnClickListener(v -> loadLoginFragment());
 
 
         observeViewModel();
@@ -47,17 +51,26 @@ public class RegisterFragment extends Fragment {
     }
 
     private void observeViewModel() {
-        mainViewModel.getRegistrationSuccess().observe(getViewLifecycleOwner(), success -> {
+        welcomeViewModel.getRegistrationSuccess().observe(getViewLifecycleOwner(), success -> {
             if (success) {
-                Toast.makeText(getActivity(), "Registrazione completata! Ora puoi accedere.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Registrazione completata!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getActivity(), MainActivity.class));
+                getActivity().finish();
             }
         });
 
-        mainViewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
+        welcomeViewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
             if (error != null) {
                 Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void loadLoginFragment() {
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.authFragmentContainer, new LoginFragment())
+                .addToBackStack(null)
+                .commit();
     }
 
 

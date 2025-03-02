@@ -16,10 +16,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.flashcardas.R;
 import com.example.flashcardas.ui.main.MainActivity;
-import com.example.flashcardas.viewmodel.MainViewModel;
+import com.example.flashcardas.viewmodel.WelcomeViewModel;
 
 public class LoginFragment extends Fragment {
-    private MainViewModel mainViewModel;
+    private WelcomeViewModel welcomeViewModel;
     private EditText emailInput, passwordInput;
 
     @Nullable
@@ -27,7 +27,7 @@ public class LoginFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
-        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        welcomeViewModel = new ViewModelProvider(this).get(WelcomeViewModel.class);
 
         emailInput = view.findViewById(R.id.emailInput);
         passwordInput = view.findViewById(R.id.passwordInput);
@@ -51,7 +51,7 @@ public class LoginFragment extends Fragment {
             return;
         }
 
-        mainViewModel.loginUser(email, password);
+        welcomeViewModel.loginUser(email, password);
     }
 
     private void loadRegisterFragment() {
@@ -64,7 +64,7 @@ public class LoginFragment extends Fragment {
 
     private void observeViewModel() {
 
-        mainViewModel.getLoginSuccess().observe(getViewLifecycleOwner(), success -> {
+        welcomeViewModel.getLoginSuccess().observe(getViewLifecycleOwner(), success -> {
             if (success) {
 
                 Toast.makeText(getActivity(), "Login riuscito!", Toast.LENGTH_SHORT).show();
@@ -74,7 +74,7 @@ public class LoginFragment extends Fragment {
         });
 
 
-        mainViewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
+        welcomeViewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
             if (error != null) {
                 Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
             }

@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.flashcardas.R;
 import com.example.flashcardas.viewmodel.MainViewModel;
+import com.example.flashcardas.viewmodel.WelcomeViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 
         // Inizializza BottomNavigationView
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_bar);
-        bottomNavigationView.setOnItemSelectedListener(this);  // Usa il nuovo listener
+        bottomNavigationView.setOnItemSelectedListener(this);
 
         // Osserva i cambiamenti del Fragment corrente
         mainViewModel.getCurrentFragment().observe(this, this::loadFragment);

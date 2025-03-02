@@ -1,17 +1,26 @@
 package com.example.flashcardas.viewmodel;
 
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.example.flashcardas.ui.welcome.LoginFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class AuthViewModel extends ViewModel {
+public class WelcomeViewModel extends ViewModel {
+
+    private final MutableLiveData<Fragment> currentFragment = new MutableLiveData<>();
     private final FirebaseAuth auth;
     private final MutableLiveData<Boolean> registrationSuccess = new MutableLiveData<>();
-    private MutableLiveData<Boolean> loginSuccess = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> loginSuccess = new MutableLiveData<>();
     private final MutableLiveData<String> errorMessage = new MutableLiveData<>();
 
-    public AuthViewModel() {
+
+    public WelcomeViewModel() {
+        // Imposta il Fragment di default
+        currentFragment.setValue(new LoginFragment());
+
         auth = FirebaseAuth.getInstance();
     }
 
@@ -41,7 +50,6 @@ public class AuthViewModel extends ViewModel {
                 });
     }
 
-    // Metodo per eseguire il login
     public void loginUser(String email, String password) {
         auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
@@ -63,3 +71,4 @@ public class AuthViewModel extends ViewModel {
         return errorMessage;
     }
 }
+
