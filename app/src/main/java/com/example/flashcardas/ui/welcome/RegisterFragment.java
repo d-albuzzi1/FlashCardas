@@ -16,10 +16,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.flashcardas.R;
 import com.example.flashcardas.ui.main.MainActivity;
-import com.example.flashcardas.viewmodel.WelcomeViewModel;
+import com.example.flashcardas.viewmodel.AuthViewModel;
 
 public class RegisterFragment extends Fragment {
-    private WelcomeViewModel welcomeViewModel;
+    private AuthViewModel authViewModel;
     private EditText emailInput, passwordInput, confirmPasswordInput;
 
     @Nullable
@@ -27,7 +27,7 @@ public class RegisterFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_register, container, false);
 
-        welcomeViewModel = new ViewModelProvider(this).get(WelcomeViewModel.class);
+        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
 
         emailInput = view.findViewById(R.id.emailInput);
         passwordInput = view.findViewById(R.id.passwordInput);
@@ -39,7 +39,7 @@ public class RegisterFragment extends Fragment {
             String email = emailInput.getText().toString().trim();
             String password = passwordInput.getText().toString().trim();
             String confirmPassword = confirmPasswordInput.getText().toString().trim();
-            welcomeViewModel.registerUser(email, password, confirmPassword);
+            authViewModel.registerUser(email, password, confirmPassword);
         });
 
         backButton.setOnClickListener(v -> loadLoginFragment());
@@ -51,7 +51,7 @@ public class RegisterFragment extends Fragment {
     }
 
     private void observeViewModel() {
-        welcomeViewModel.getRegistrationSuccess().observe(getViewLifecycleOwner(), success -> {
+        authViewModel.getRegistrationSuccess().observe(getViewLifecycleOwner(), success -> {
             if (success) {
                 Toast.makeText(getActivity(), "Registrazione completata!", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getActivity(), MainActivity.class));
@@ -59,7 +59,7 @@ public class RegisterFragment extends Fragment {
             }
         });
 
-        welcomeViewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
+        authViewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
             if (error != null) {
                 Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
             }

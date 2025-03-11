@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.flashcardas.R;
 import com.example.flashcardas.viewmodel.MainViewModel;
-import com.example.flashcardas.viewmodel.WelcomeViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
