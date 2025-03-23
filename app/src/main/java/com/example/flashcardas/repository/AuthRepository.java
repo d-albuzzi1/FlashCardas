@@ -2,6 +2,7 @@ package com.example.flashcardas.repository;
 
 import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class AuthRepository {
     private final FirebaseAuth auth;
@@ -48,6 +49,15 @@ public class AuthRepository {
                         errorMessage.setValue(task.getException().getMessage());
                     }
                 });
+    }
+
+    public void logout() {
+        auth.signOut();
+    }
+
+    public boolean isUserLoggedIn() {
+        FirebaseUser currentUser = auth.getCurrentUser();
+        return currentUser != null;
     }
 
     public MutableLiveData<Boolean> getRegistrationSuccess() {

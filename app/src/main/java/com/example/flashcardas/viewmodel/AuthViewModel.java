@@ -19,6 +19,14 @@ public class AuthViewModel extends ViewModel {
         authRepository.loginUser(email, password);
     }
 
+    public void logout() {
+        authRepository.logout();
+    }
+
+    public boolean isUserLoggedIn() {
+        return authRepository.isUserLoggedIn();
+    }
+
     public LiveData<Boolean> getRegistrationSuccess() {
         return authRepository.getRegistrationSuccess();
     }
