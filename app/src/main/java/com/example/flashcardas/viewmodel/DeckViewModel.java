@@ -1,8 +1,8 @@
 package com.example.flashcardas.viewmodel;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
 import com.example.flashcardas.model.Deck;
 import com.example.flashcardas.model.Flashcard;
 import com.example.flashcardas.repository.DeckRepository;
@@ -10,19 +10,24 @@ import com.example.flashcardas.repository.DeckRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeViewModel extends ViewModel {
+public class DeckViewModel extends ViewModel {
     private final DeckRepository deckRepository;
+    private final LiveData<List<Deck>> decksLiveData;
+
+    // questo è da togliere quando metto i veri deck dell account
     private final MutableLiveData<List<Deck>> decks = new MutableLiveData<>(new ArrayList<>());
 
-    public HomeViewModel() {
+
+    public DeckViewModel() {
         deckRepository = new DeckRepository();
+        decksLiveData = deckRepository.getDecks(); // Osserva i mazzi in tempo reale
         loadTestDecks();
     }
 
     private void loadTestDecks() {
         List<Deck> testDecks = new ArrayList<>();
 
-        // Creiamo delle flashcard finte
+        //  flashcard finte
         List<Flashcard> flashcards1 = new ArrayList<>();
         flashcards1.add(new Flashcard("Dog", "Cane"));
         flashcards1.add(new Flashcard("Cat", "Gatto"));
@@ -40,8 +45,20 @@ public class HomeViewModel extends ViewModel {
         decks.setValue(testDecks);
     }
 
-    public MutableLiveData<List<Deck>> getDecks() {
+    public LiveData<List<Deck>> getDecks() {
+        return decksLiveData;
+    }
+
+    // questo è da togliere quando metto i veri deck dell account
+    public MutableLiveData<List<Deck>> getDecksMutable() {
         return decks;
     }
-}
 
+    public void addDeck(Deck deck) {
+        deckRepository.addDeck(deck);
+    }
+
+    public void deleteDeck(String deckId) {
+        deckRepository.deleteDeck(deckId);
+    }
+}

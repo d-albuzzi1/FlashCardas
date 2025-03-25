@@ -16,19 +16,17 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.flashcardas.R;
-import com.example.flashcardas.ui.adapter.DeckAdapter;
+import com.example.flashcardas.ui.adapter.HomeDeckAdapter;
 import com.example.flashcardas.ui.welcome.WelcomeActivity;
 import com.example.flashcardas.viewmodel.AuthViewModel;
-import com.example.flashcardas.viewmodel.HomeViewModel;
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.flashcardas.viewmodel.DeckViewModel;
 
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
-    private HomeViewModel homeViewModel;
+    private DeckViewModel deckViewModel;
     private AuthViewModel authViewModel;
-
-    private DeckAdapter deckAdapter;
+    private HomeDeckAdapter homeDeckAdapter;
     private ImageView accountImage;
 
     @Nullable
@@ -38,37 +36,38 @@ public class HomeFragment extends Fragment {
 
         authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
 
+        // Gestione tasto disconnetti
         accountImage = view.findViewById(R.id.accountImage);
         accountImage.setOnClickListener(v -> showLogoutDialog());
 
+        // Gestione lista mazzi
         RecyclerView recyclerView = view.findViewById(R.id.recyclerViewDecks);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        deckAdapter = new DeckAdapter(new ArrayList<>(), deckId -> {
-            ManageCollectionsFragment manageFragment = ManageCollectionsFragment.newInstance(deckId);
+        homeDeckAdapter = new HomeDeckAdapter(new ArrayList<>(), deck -> {
+            TrainingFragment trainingFragment = TrainingFragment.newInstance(deck);
+
             requireActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, manageFragment)
+                    .replace(R.id.fragment_container, trainingFragment)
                     .addToBackStack(null)
                     .commit();
         });
 
-        recyclerView.setAdapter(deckAdapter);
+        recyclerView.setAdapter(homeDeckAdapter);
 
-        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-        homeViewModel.getDecks().observe(getViewLifecycleOwner(), deckAdapter::setDecks);
+        deckViewModel = new ViewModelProvider(this).get(DeckViewModel.class);
+        deckViewModel.getDecksMutable().observe(getViewLifecycleOwner(), homeDeckAdapter::setDecks);
 
+        // Gestione caso in cui non ci sono mazzi
         TextView emptyMessage = view.findViewById(R.id.emptyMessage);
-
-        homeViewModel.getDecks().observe(getViewLifecycleOwner(), decks -> {
+        deckViewModel.getDecksMutable().observe(getViewLifecycleOwner(), decks -> {
             if (decks != null && !decks.isEmpty()) {
-                deckAdapter.setDecks(decks);
+                homeDeckAdapter.setDecks(decks);
                 emptyMessage.setVisibility(View.GONE);
             } else {
                 emptyMessage.setVisibility(View.VISIBLE);
             }
         });
-
-
 
         return view;
     }
