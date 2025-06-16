@@ -13,6 +13,7 @@ import java.util.List;
 public class HomeDeckAdapter extends RecyclerView.Adapter<HomeDeckAdapter.DeckViewHolder> {
     private List<Deck> deckList;
     private final OnDeckClickListener listener;     // Interfaccia per gestire il click su un mazzo
+
     public interface OnDeckClickListener {
         void onDeckClick(Deck deck);
     }

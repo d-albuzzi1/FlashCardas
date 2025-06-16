@@ -11,18 +11,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.flashcardas.R;
 import com.example.flashcardas.model.Flashcard;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FlashcardAdapter extends RecyclerView.Adapter<FlashcardAdapter.FlashcardViewHolder> {
 
-    private List<Flashcard> flashcards;
+    private List<Flashcard> flashcards = new ArrayList<>();
 
     // Costruttore
     public FlashcardAdapter(List<Flashcard> flashcards) {
-        this.flashcards = flashcards;
+        this.flashcards = new ArrayList<>(flashcards); // Copia per evitare riferimenti diretti
     }
 
-    // Inflazione del layout per ogni elemento (flashcard)
+    // Metodo per aggiornare i dati dell'adapter
+    public void setFlashcards(List<Flashcard> newFlashcards) {
+        this.flashcards.clear();
+        this.flashcards.addAll(newFlashcards);
+        notifyDataSetChanged(); // Notifica il cambiamento alla RecyclerView
+    }
+
     @NonNull
     @Override
     public FlashcardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -30,7 +37,6 @@ public class FlashcardAdapter extends RecyclerView.Adapter<FlashcardAdapter.Flas
         return new FlashcardViewHolder(itemView);
     }
 
-    // Binding dei dati alla vista
     @Override
     public void onBindViewHolder(@NonNull FlashcardViewHolder holder, int position) {
         Flashcard currentFlashcard = flashcards.get(position);
@@ -38,7 +44,6 @@ public class FlashcardAdapter extends RecyclerView.Adapter<FlashcardAdapter.Flas
         holder.answerText.setText(currentFlashcard.getTranslation());
     }
 
-    // Numero di elementi da visualizzare
     @Override
     public int getItemCount() {
         return flashcards.size();
@@ -56,4 +61,3 @@ public class FlashcardAdapter extends RecyclerView.Adapter<FlashcardAdapter.Flas
         }
     }
 }
-

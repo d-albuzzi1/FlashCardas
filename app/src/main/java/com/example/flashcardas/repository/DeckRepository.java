@@ -13,6 +13,7 @@ public class DeckRepository {
     private final FirebaseFirestore db;
     private final CollectionReference deckCollection;
     private final MutableLiveData<List<Deck>> decksLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Deck> deckLiveData = new MutableLiveData<>();
 
     public DeckRepository() {
         db = FirebaseFirestore.getInstance();
@@ -28,6 +29,15 @@ public class DeckRepository {
             }
         });
         return decksLiveData;
+    }
+    public LiveData<Deck> getDeckById(String deckId) {
+        deckCollection.document(deckId).get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                Deck deck = documentSnapshot.toObject(Deck.class);
+                deckLiveData.setValue(deck);
+            }
+        });
+        return deckLiveData;
     }
 
     public void addDeck(Deck deck) {

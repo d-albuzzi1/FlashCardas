@@ -45,7 +45,10 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         homeDeckAdapter = new HomeDeckAdapter(new ArrayList<>(), deck -> {
-            TrainingFragment trainingFragment = TrainingFragment.newInstance(deck);
+
+            deckViewModel.setSelectedDeck(deck);
+
+            TrainingFragment trainingFragment = new TrainingFragment();
 
             requireActivity().getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, trainingFragment)
@@ -56,11 +59,11 @@ public class HomeFragment extends Fragment {
         recyclerView.setAdapter(homeDeckAdapter);
 
         deckViewModel = new ViewModelProvider(this).get(DeckViewModel.class);
-        deckViewModel.getDecksMutable().observe(getViewLifecycleOwner(), homeDeckAdapter::setDecks);
+        deckViewModel.getDecks().observe(getViewLifecycleOwner(), homeDeckAdapter::setDecks);
 
         // Gestione caso in cui non ci sono mazzi
         TextView emptyMessage = view.findViewById(R.id.emptyMessage);
-        deckViewModel.getDecksMutable().observe(getViewLifecycleOwner(), decks -> {
+        deckViewModel.getDecks().observe(getViewLifecycleOwner(), decks -> {
             if (decks != null && !decks.isEmpty()) {
                 homeDeckAdapter.setDecks(decks);
                 emptyMessage.setVisibility(View.GONE);
