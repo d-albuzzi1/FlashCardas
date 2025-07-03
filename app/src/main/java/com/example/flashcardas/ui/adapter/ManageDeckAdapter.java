@@ -3,7 +3,8 @@ package com.example.flashcardas.ui.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.flashcardas.R;
@@ -11,15 +12,21 @@ import com.example.flashcardas.model.Deck;
 import java.util.List;
 
 public class ManageDeckAdapter extends RecyclerView.Adapter<ManageDeckAdapter.DeckViewHolder> {
-    private List<Deck> deckList;
+    public interface OnDeckClickListener {
+        void onDeckClick(Deck deck);
+    }
 
-    public ManageDeckAdapter(List<Deck> deckList) {
+    private List<Deck> deckList;
+    private OnDeckClickListener listener;
+
+    public ManageDeckAdapter(List<Deck> deckList, OnDeckClickListener listener) {
         this.deckList = deckList;
+        this.listener = listener;
     }
 
     public void setDecks(List<Deck> decks) {
         this.deckList = decks;
-        notifyDataSetChanged(); // Notifica alla RecyclerView che i dati sono cambiati
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -32,7 +39,13 @@ public class ManageDeckAdapter extends RecyclerView.Adapter<ManageDeckAdapter.De
     @Override
     public void onBindViewHolder(@NonNull DeckViewHolder holder, int position) {
         Deck deck = deckList.get(position);
-        holder.deckNameTextView.setText(deck.getName());
+        holder.deckButton.setText(deck.getName());
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onDeckClick(deck);
+            }
+        });
     }
 
     @Override
@@ -41,11 +54,12 @@ public class ManageDeckAdapter extends RecyclerView.Adapter<ManageDeckAdapter.De
     }
 
     static class DeckViewHolder extends RecyclerView.ViewHolder {
-        TextView deckNameTextView;
+        Button deckButton;
 
         DeckViewHolder(View itemView) {
             super(itemView);
-            deckNameTextView = itemView.findViewById(R.id.textDeck);
+            deckButton = itemView.findViewById(R.id.deckButton);
         }
     }
 }
+

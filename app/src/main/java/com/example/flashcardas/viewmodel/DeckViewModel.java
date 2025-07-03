@@ -21,6 +21,27 @@ public class DeckViewModel extends ViewModel {
         decksLiveData = deckRepository.getDecks();
     }
 
+    public void addFlashcardToSelectedDeck(Flashcard flashcard) {
+        Deck deck = selectedDeck.getValue();
+        if (deck != null) {
+            // 1. Aggiorna lista flashcard localmente
+            List<Flashcard> updatedFlashcards = new ArrayList<>(deck.getFlashcards());
+            updatedFlashcards.add(flashcard);
+
+            Deck updatedDeck = new Deck(deck.getId(), deck.getName(), updatedFlashcards);
+
+            // 2. Aggiorna il LiveData per riflettere subito il cambiamento nella UI
+            selectedDeck.setValue(updatedDeck);
+
+            // 3. Aggiorna il database remoto
+            deckRepository.addFlashcardToDeck(updatedDeck.getId(), flashcard);
+        }
+    }
+
+
+    public void updateDeck(Deck deck) {
+        deckRepository.updateDeck(deck);
+    }
 
     public LiveData<List<Deck>> getDecks() {
         return decksLiveData;

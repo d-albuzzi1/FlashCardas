@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/nav_manage"
-        android:name="com.example.flashcardas.ui.main.ManageCollectionsFragment"
+        android:name="com.example.flashcardas.ui.main.ManageDecksFragment"
         android:label="Manage"
-        tools:layout="@layout/fragment_manage_collections" />
+        tools:layout="@layout/fragment_manage_decks" />
 </navigation>

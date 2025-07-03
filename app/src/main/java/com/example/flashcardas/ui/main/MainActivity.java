@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
                 mainViewModel.setCurrentFragment(new TrainingFragment());
                 return true;
             case "Manage":
-                mainViewModel.setCurrentFragment(new ManageCollectionsFragment());
+                mainViewModel.setCurrentFragment(new ManageDecksFragment());
                 return true;
             default:
                 return false;

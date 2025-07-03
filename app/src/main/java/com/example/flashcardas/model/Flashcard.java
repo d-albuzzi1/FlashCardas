@@ -7,7 +7,11 @@ public class Flashcard implements Parcelable {
     private String word;
     private String translation;
 
-    // Costruttore
+    // Costruttore vuoto richiesto da Firestore
+    public Flashcard() {
+    }
+
+    // Costruttore completo
     public Flashcard(String word, String translation) {
         this.word = word;
         this.translation = translation;
