@@ -56,17 +56,16 @@ public class CreateDeckFragment extends Fragment {
 
         deckViewModel = new ViewModelProvider(requireActivity()).get(DeckViewModel.class);
 
-        // osserva il mazzo selezionato per aggiornare UI
         deckViewModel.getSelectedDeck().observe(getViewLifecycleOwner(), deck -> {
             if (deck != null) {
                 editTextDeckName.setText(deck.getName());
-                adapter.updateFlashcards(deck.getFlashcards());
+                adapter.updateFlashcards(deck.getFlashcards());  // <-- questo ricarica la lista
             } else {
-                // Se mazzo null, pulisci campi
                 editTextDeckName.setText("");
                 adapter.updateFlashcards(new ArrayList<>());
             }
         });
+
 
         buttonAdd.setOnClickListener(v -> showAddFlashcardDialog());
 
@@ -121,8 +120,16 @@ public class CreateDeckFragment extends Fragment {
             String translation = editTranslation.getText().toString().trim();
 
             if (!word.isEmpty() && !translation.isEmpty()) {
+                Deck deck = deckViewModel.getSelectedDeck().getValue();
+                if (deck == null) {
+                    // Crea un nuovo mazzo al volo se non esiste ancora
+                    deck = new Deck(generateId(), editTextDeckName.getText().toString().trim(), new ArrayList<>());
+                    deckViewModel.setSelectedDeck(deck);
+                    deckViewModel.addDeck(deck);
+                }
                 Flashcard flashcard = new Flashcard(word, translation);
                 deckViewModel.addFlashcardToSelectedDeck(flashcard);
+
             } else {
                 Toast.makeText(getContext(), "Compila entrambi i campi", Toast.LENGTH_SHORT).show();
             }

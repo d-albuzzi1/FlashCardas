@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment {
 
             deckViewModel.setSelectedDeck(deck);
 
-            TrainingFragment trainingFragment = new TrainingFragment();
+            TrainingFragment trainingFragment = TrainingFragment.newInstance(deck.getId());
 
             requireActivity().getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, trainingFragment)

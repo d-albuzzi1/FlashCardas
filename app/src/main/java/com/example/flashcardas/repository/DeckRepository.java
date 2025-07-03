@@ -1,73 +1,93 @@
 package com.example.flashcardas.repository;
 
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
 import com.example.flashcardas.model.Deck;
 import com.example.flashcardas.model.Flashcard;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DeckRepository {
-    private final FirebaseFirestore db;
-    private final CollectionReference deckCollection;
-    private final MutableLiveData<List<Deck>> decksLiveData = new MutableLiveData<>();
-    private final MutableLiveData<Deck> deckLiveData = new MutableLiveData<>();
 
-    public DeckRepository() {
-        db = FirebaseFirestore.getInstance();
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        deckCollection = db.collection("users").document(userId).collection("decks");
+    private final LocalStorage localStorage;
+    private final FirebaseAuth auth;
+    private final MutableLiveData<List<Deck>> decksLiveData = new MutableLiveData<>();
+
+
+    public DeckRepository(Context context) {
+        localStorage = new LocalStorage(context);
+        auth = FirebaseAuth.getInstance();
+        decksLiveData.setValue(localStorage.loadDecks());
     }
 
-    public LiveData<List<Deck>> getDecks() {
-        deckCollection.addSnapshotListener((value, error) -> {
-            if (error == null && value != null) {
-                List<Deck> deckList = value.toObjects(Deck.class);
-                decksLiveData.setValue(deckList);
-            }
-        });
+    // Se vuoi LiveData, puoi farlo così (caricamento sincronizzato)
+    public LiveData<List<Deck>> getDecksLiveData() {
         return decksLiveData;
     }
-    public LiveData<Deck> getDeckById(String deckId) {
-        deckCollection.document(deckId).get().addOnSuccessListener(documentSnapshot -> {
-            if (documentSnapshot.exists()) {
-                Deck deck = documentSnapshot.toObject(Deck.class);
-                deckLiveData.setValue(deck);
-            }
-        });
-        return deckLiveData;
+
+    // Oppure metodo diretto che restituisce lista (più semplice)
+    public List<Deck> getDecks() {
+        return localStorage.loadDecks();
     }
 
     public void addDeck(Deck deck) {
-        String id = deckCollection.document().getId();
-        Deck deckWithId = new Deck(id, deck.getName(), deck.getFlashcards());
-        deckCollection.document(id).set(deckWithId);
+        List<Deck> decks = new ArrayList<>(localStorage.loadDecks());
+        decks.add(deck);
+        localStorage.saveDecks(decks);
+        decksLiveData.setValue(decks); // <--- aggiorna LiveData
     }
 
     public void updateDeck(Deck deck) {
-        deckCollection.document(deck.getId()).set(deck);
+        List<Deck> decks = new ArrayList<>(localStorage.loadDecks());
+        for (int i = 0; i < decks.size(); i++) {
+            if (decks.get(i).getId().equals(deck.getId())) {
+                decks.set(i, deck);
+                break;
+            }
+        }
+        localStorage.saveDecks(decks);
+        decksLiveData.setValue(decks); // <--- aggiorna LiveData
     }
 
-
     public void deleteDeck(String deckId) {
-        deckCollection.document(deckId).delete();
+        List<Deck> decks = new ArrayList<>(localStorage.loadDecks());
+        decks.removeIf(deck -> deck.getId().equals(deckId));
+        localStorage.saveDecks(decks);
+        decksLiveData.setValue(decks); // <--- aggiorna LiveData
     }
 
     public void addFlashcardToDeck(String deckId, Flashcard flashcard) {
-        deckCollection.document(deckId).get().addOnSuccessListener(doc -> {
-            Deck deck = doc.toObject(Deck.class);
-            if (deck != null) {
-                List<Flashcard> updatedList = new ArrayList<>(deck.getFlashcards());
-                updatedList.add(flashcard);
-
-                Deck updatedDeck = new Deck(deckId, deck.getName(), updatedList);
-                deckCollection.document(deckId).set(updatedDeck);
+        List<Deck> decks = localStorage.loadDecks();
+        for (int i = 0; i < decks.size(); i++) {
+            Deck deck = decks.get(i);
+            if (deck.getId().equals(deckId)) {
+                List<Flashcard> flashcards = new ArrayList<>(deck.getFlashcards());
+                flashcards.add(flashcard);
+                decks.set(i, new Deck(deckId, deck.getName(), flashcards));
+                break;
             }
-        });
+        }
+        localStorage.saveDecks(decks);
+        decksLiveData.setValue(decks); // <--- aggiorna LiveData
     }
 
+    public void getFlashcardsForDeck(String deckId, OnFlashcardsLoadedListener listener) {
+        List<Deck> decks = localStorage.loadDecks();
+        for (Deck deck : decks) {
+            if (deck.getId().equals(deckId)) {
+                listener.onFlashcardsLoaded(deck.getFlashcards());
+                return;
+            }
+        }
+        listener.onFlashcardsLoaded(new ArrayList<>());
+    }
+
+    public interface OnFlashcardsLoadedListener {
+        void onFlashcardsLoaded(List<Flashcard> flashcards);
+    }
 }

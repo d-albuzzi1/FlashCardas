@@ -1,8 +1,13 @@
 package com.example.flashcardas.viewmodel;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
+
+
 import com.example.flashcardas.model.Deck;
 import com.example.flashcardas.model.Flashcard;
 import com.example.flashcardas.repository.DeckRepository;
@@ -10,30 +15,26 @@ import com.example.flashcardas.repository.DeckRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeckViewModel extends ViewModel {
-    private final DeckRepository deckRepository;
-    private final LiveData<List<Deck>> decksLiveData;
+public class DeckViewModel extends AndroidViewModel {
+
+    private DeckRepository deckRepository;
+    private LiveData<List<Deck>> decksLiveData;
     private final MutableLiveData<Deck> selectedDeck = new MutableLiveData<>();
 
-
-    public DeckViewModel() {
-        deckRepository = new DeckRepository();
-        decksLiveData = deckRepository.getDecks();
+    public DeckViewModel(@NonNull Application application) {
+        super(application);
+        deckRepository = new DeckRepository(application.getApplicationContext());
+        decksLiveData = deckRepository.getDecksLiveData();
     }
 
     public void addFlashcardToSelectedDeck(Flashcard flashcard) {
         Deck deck = selectedDeck.getValue();
         if (deck != null) {
-            // 1. Aggiorna lista flashcard localmente
             List<Flashcard> updatedFlashcards = new ArrayList<>(deck.getFlashcards());
             updatedFlashcards.add(flashcard);
 
             Deck updatedDeck = new Deck(deck.getId(), deck.getName(), updatedFlashcards);
-
-            // 2. Aggiorna il LiveData per riflettere subito il cambiamento nella UI
-            selectedDeck.setValue(updatedDeck);
-
-            // 3. Aggiorna il database remoto
+            selectedDeck.setValue(updatedDeck);  // triggera osservatori
             deckRepository.addFlashcardToDeck(updatedDeck.getId(), flashcard);
         }
     }
@@ -55,8 +56,8 @@ public class DeckViewModel extends ViewModel {
         return selectedDeck;
     }
 
-    public LiveData<Deck> getDeckById(String deckId) {
-        return deckRepository.getDeckById(deckId);
+    public void getFlashcardsForDeck(String deckId, DeckRepository.OnFlashcardsLoadedListener listener) {
+        deckRepository.getFlashcardsForDeck(deckId, listener);
     }
 
     public void addDeck(Deck deck) {
