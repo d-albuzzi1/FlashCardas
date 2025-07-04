@@ -12,10 +12,11 @@
         android:layout_gravity="center"
         android:orientation="vertical"
         android:gravity="center"
-        android:background="@drawable/flashcard_back"
+        android:background="@drawable/flashcard"
         android:padding="16dp"
         android:layout_marginTop="20dp"
-        android:elevation="8dp">
+        android:elevation="8dp"
+        >
 
         <TextView
             android:id="@+id/flashcard_word"
@@ -24,7 +25,8 @@
             android:text="Word"
             android:textSize="24sp"
             android:textColor="@android:color/black"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:layout_marginEnd="10dp"/>
 
         <TextView
             android:id="@+id/text_translation"
@@ -34,7 +36,9 @@
             android:textSize="20sp"
             android:textColor="@android:color/black"
             android:visibility="gone"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="10dp"/>
+
     </LinearLayout>
     <!-- Immagine a sinistra -->
     <ImageView
@@ -44,7 +48,7 @@
         android:src="@drawable/freccia_rossa_sx"
         android:layout_gravity="start"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="70dp"
         android:contentDescription="Decorazione sinistra"/>
 
     <!-- Immagine a destra -->
@@ -55,7 +59,7 @@
         android:src="@drawable/freccia_verde_dx"
         android:layout_gravity="end"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="70dp"
         android:contentDescription="Decorazione destra"/>
 
     <!-- Messaggio fine -->
