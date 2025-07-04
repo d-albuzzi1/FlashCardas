@@ -13,6 +13,15 @@ import com.example.flashcardas.viewmodel.MainViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
+/**
+ * MainActivity gestisce la navigazione principale tramite BottomNavigationView.
+ *
+ * - Usa un ViewModel per mantenere e osservare il Fragment attivo.
+ * - Imposta la BottomNavigationView e ne gestisce le selezioni tramite OnItemSelectedListener.
+ * - Cambia dinamicamente il Fragment visualizzato in base all'elemento selezionato nella barra.
+ * - All'avvio mostra il Fragment di default (HomeFragment) e seleziona l'item corrispondente.
+ */
+
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
     private MainViewModel mainViewModel;

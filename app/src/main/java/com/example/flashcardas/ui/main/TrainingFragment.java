@@ -26,6 +26,17 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * TrainingFragment gestisce la sessione di allenamento con le flashcard di un mazzo specifico.
+ *
+ * - Riceve l'id del mazzo e carica le flashcard corrispondenti tramite DeckViewModel.
+ * - Mostra una flashcard alla volta: la parola e, al tap, la traduzione.
+ * - Permette di segnare la carta come "conosciuta" con uno swipe a destra, o ignorarla con swipe a sinistra.
+ * - Quando tutte le carte sono state conosciute, mostra un messaggio di fine e un bottone per riavviare l'allenamento.
+ * - Usa animazioni per la transizione tra le carte.
+ * - Gestisce gesture touch per tap e swipe sulla card.
+ */
+
 public class TrainingFragment extends Fragment {
     private static final String ARG_DECK_ID = "deck_id";
     private String deckId;

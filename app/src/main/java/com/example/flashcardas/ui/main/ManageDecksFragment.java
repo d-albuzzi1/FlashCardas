@@ -23,6 +23,16 @@ import com.example.flashcardas.viewmodel.DeckViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Fragment per gestire la lista dei mazzi.
+ *
+ * - Visualizza i mazzi tramite RecyclerView e ManageDeckAdapter.
+ * - Osserva il DeckViewModel per aggiornare la lista dei mazzi in tempo reale.
+ * - Permette di creare un nuovo mazzo tramite un pulsante.
+ * - Consente di selezionare un mazzo per modificarlo o eliminarlo tramite un dialog.
+ * - Gestisce la navigazione verso CreateDeckFragment per creare o modificare un mazzo.
+ */
+
 public class ManageDecksFragment extends Fragment {
 
     private DeckViewModel deckViewModel;
@@ -51,7 +61,7 @@ public class ManageDecksFragment extends Fragment {
         });
 
         createDeckButton.setOnClickListener(v -> {
-            openCreateDeckFragment(null);  // null significa nuovo mazzo vuoto
+            openCreateDeckFragment(null);
         });
 
         return view;
@@ -76,9 +86,8 @@ public class ManageDecksFragment extends Fragment {
     private void openCreateDeckFragment(Deck deckToEdit) {
         CreateDeckFragment createDeckFragment = new CreateDeckFragment();
         if (deckToEdit != null) {
-            // Imposta il mazzo selezionato nel ViewModel (già fatto prima in onDeckSelected)
         } else {
-            // Nuovo mazzo: resettare selezione nel ViewModel (se vuoi)
+            // Nuovo mazzo
             deckViewModel.setSelectedDeck(null);
         }
         requireActivity().getSupportFragmentManager()

@@ -18,6 +18,16 @@ import com.example.flashcardas.R;
 import com.example.flashcardas.ui.main.MainActivity;
 import com.example.flashcardas.viewmodel.AuthViewModel;
 
+/**
+ * Fragment per la registrazione utente.
+ *
+ * - Gestisce input di email, password e conferma password.
+ * - Invia i dati a AuthViewModel per la registrazione.
+ * - Osserva lo stato di successo o errore e mostra messaggi con Toast.
+ * - Al successo, apre MainActivity e chiude l'activity corrente.
+ * - Permette di tornare al LoginFragment con un bottone "indietro".
+ */
+
 public class RegisterFragment extends Fragment {
     private AuthViewModel authViewModel;
     private EditText emailInput, passwordInput, confirmPasswordInput;

@@ -12,6 +12,15 @@ import com.example.flashcardas.viewmodel.AuthViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+ * Activity di benvenuto che gestisce il flusso di autenticazione.
+ *
+ * - Controlla se l'utente è già loggato e, in tal caso, avvia MainActivity.
+ * - Carica il fragment di login o registrazione in base all'intent ricevuto.
+ * - Se nessun fragment specificato, carica di default il LoginFragment.
+ */
+
+
 public class WelcomeActivity extends AppCompatActivity {
     private AuthViewModel authViewModel;
 

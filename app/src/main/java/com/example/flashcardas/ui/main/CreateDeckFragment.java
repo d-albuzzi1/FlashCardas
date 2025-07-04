@@ -25,6 +25,11 @@ import com.example.flashcardas.viewmodel.DeckViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Fragment per creare o modificare un mazzo di flashcard.
+ * Permette di inserire/modificare il nome del mazzo, aggiungere e rimuovere flashcard.
+ * Utilizza un ViewModel condiviso per aggiornare e osservare lo stato del mazzo selezionato.
+ */
 public class CreateDeckFragment extends Fragment {
     private DeckViewModel deckViewModel;
     private EditText editTextDeckName;
@@ -34,6 +39,7 @@ public class CreateDeckFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inizializza la UI e componenti
         View view = inflater.inflate(R.layout.fragment_create_deck, container, false);
 
         editTextDeckName = view.findViewById(R.id.editTextDeckName);
@@ -41,6 +47,7 @@ public class CreateDeckFragment extends Fragment {
         buttonAdd = view.findViewById(R.id.buttonAddFlashcard);
         buttonSaveDeck = view.findViewById(R.id.buttonSaveDeck);
 
+        // Adapter con listener per la rimozione delle flashcard
         adapter = new DeckEditAdapter(new ArrayList<>(), flashcard -> {
             Deck deck = deckViewModel.getSelectedDeck().getValue();
             if (deck != null) {
@@ -54,21 +61,24 @@ public class CreateDeckFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
+        // Ottiene il ViewModel condiviso
         deckViewModel = new ViewModelProvider(requireActivity()).get(DeckViewModel.class);
 
+        // Osserva i cambiamenti del mazzo selezionato per aggiornare UI
         deckViewModel.getSelectedDeck().observe(getViewLifecycleOwner(), deck -> {
             if (deck != null) {
                 editTextDeckName.setText(deck.getName());
-                adapter.updateFlashcards(deck.getFlashcards());  // <-- questo ricarica la lista
+                adapter.updateFlashcards(deck.getFlashcards());
             } else {
                 editTextDeckName.setText("");
                 adapter.updateFlashcards(new ArrayList<>());
             }
         });
 
-
+        // Apre dialog per aggiungere una nuova flashcard
         buttonAdd.setOnClickListener(v -> showAddFlashcardDialog());
 
+        // Salva o aggiorna il mazzo quando si preme il pulsante Salva
         buttonSaveDeck.setOnClickListener(v -> {
             String name = editTextDeckName.getText().toString().trim();
             if (name.isEmpty()) {
@@ -79,26 +89,25 @@ public class CreateDeckFragment extends Fragment {
             Deck deck = deckViewModel.getSelectedDeck().getValue();
 
             if (deck == null) {
-                // Nuovo mazzo
+                // Crea un nuovo mazzo
                 Deck newDeck = new Deck(generateId(), name, new ArrayList<>());
                 deckViewModel.addDeck(newDeck);
                 deckViewModel.setSelectedDeck(newDeck);
                 Toast.makeText(getContext(), "Mazzo creato!", Toast.LENGTH_SHORT).show();
 
-                // Pulisci campi per nuovo inserimento (opzionale)
+                // Resetta campi (opzionale)
                 editTextDeckName.setText("");
                 adapter.updateFlashcards(new ArrayList<>());
 
-                // Se vuoi tornare indietro automatico, altrimenti commenta
+                // Torna indietro nella navigazione (opzionale)
                 requireActivity().getSupportFragmentManager().popBackStack();
             } else {
-                // Mazzo esistente aggiornato
+                // Aggiorna mazzo esistente
                 Deck updatedDeck = new Deck(deck.getId(), name, deck.getFlashcards());
                 deckViewModel.updateDeck(updatedDeck);
                 deckViewModel.setSelectedDeck(updatedDeck);
                 Toast.makeText(getContext(), "Mazzo aggiornato!", Toast.LENGTH_SHORT).show();
 
-                // Torna indietro dopo update (opzionale)
                 requireActivity().getSupportFragmentManager().popBackStack();
             }
         });
@@ -106,6 +115,7 @@ public class CreateDeckFragment extends Fragment {
         return view;
     }
 
+    // Mostra un dialog per inserire una nuova flashcard
     private void showAddFlashcardDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Aggiungi Flashcard");
@@ -122,7 +132,7 @@ public class CreateDeckFragment extends Fragment {
             if (!word.isEmpty() && !translation.isEmpty()) {
                 Deck deck = deckViewModel.getSelectedDeck().getValue();
                 if (deck == null) {
-                    // Crea un nuovo mazzo al volo se non esiste ancora
+                    // Crea nuovo mazzo se non esiste
                     deck = new Deck(generateId(), editTextDeckName.getText().toString().trim(), new ArrayList<>());
                     deckViewModel.setSelectedDeck(deck);
                     deckViewModel.addDeck(deck);

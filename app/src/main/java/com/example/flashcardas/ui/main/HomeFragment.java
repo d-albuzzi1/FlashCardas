@@ -23,6 +23,15 @@ import com.example.flashcardas.viewmodel.DeckViewModel;
 
 import java.util.ArrayList;
 
+/**
+ * Fragment principale della home, mostra la lista dei mazzi disponibili.
+ *
+ * - Osserva il ViewModel per ottenere la lista dei mazzi e aggiorna la RecyclerView.
+ * - Mostra un messaggio nel caso non ci siano mazzi da visualizzare.
+ * - Permette di selezionare un mazzo per avviare la schermata di training.
+ * - Gestisce il logout tramite un dialog di conferma e reindirizza alla WelcomeActivity.
+ */
+
 public class HomeFragment extends Fragment {
     private DeckViewModel deckViewModel;
     private AuthViewModel authViewModel;

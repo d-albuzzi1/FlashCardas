@@ -15,6 +15,15 @@ import com.example.flashcardas.repository.DeckRepository;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * ViewModel per la gestione dei mazzi di flashcard.
+ *
+ * - Espone LiveData per la lista dei mazzi e per il mazzo selezionato.
+ * - Gestisce aggiunta, aggiornamento e cancellazione dei mazzi e delle flashcard.
+ * - Coordina la comunicazione tra UI e DeckRepository.
+ */
+
+
 public class DeckViewModel extends AndroidViewModel {
 
     private DeckRepository deckRepository;

@@ -7,6 +7,15 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.flashcardas.ui.main.HomeFragment;
 
+/**
+ * ViewModel per gestire il Fragment attualmente visualizzato nell'app.
+ *
+ * - Tiene traccia del Fragment corrente tramite LiveData.
+ * - Inizializza il Fragment con HomeFragment di default.
+ * - Permette di cambiare dinamicamente il Fragment visualizzato dalla UI.
+ */
+
+
 public class MainViewModel extends ViewModel {
 
     private final MutableLiveData<Fragment> currentFragment = new MutableLiveData<>();
