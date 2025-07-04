@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,6 +36,8 @@ public class CreateDeckFragment extends Fragment {
     private EditText editTextDeckName;
     private RecyclerView recyclerView;
     private DeckEditAdapter adapter;
+    private TextView textCardCount;
+
     private Button buttonAdd, buttonSaveDeck;
 
     @Override
@@ -46,6 +49,8 @@ public class CreateDeckFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerViewFlashcardsInDeck);
         buttonAdd = view.findViewById(R.id.buttonAddFlashcard);
         buttonSaveDeck = view.findViewById(R.id.buttonSaveDeck);
+        textCardCount = view.findViewById(R.id.textCardCount);
+
 
         // Adapter con listener per la rimozione delle flashcard
         adapter = new DeckEditAdapter(new ArrayList<>(), flashcard -> {
@@ -69,9 +74,11 @@ public class CreateDeckFragment extends Fragment {
             if (deck != null) {
                 editTextDeckName.setText(deck.getName());
                 adapter.updateFlashcards(deck.getFlashcards());
+                textCardCount.setText(deck.getFlashcards().size() + " carte");
             } else {
                 editTextDeckName.setText("");
                 adapter.updateFlashcards(new ArrayList<>());
+                textCardCount.setText("0 carte");
             }
         });
 

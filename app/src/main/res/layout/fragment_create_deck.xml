@@ -5,27 +5,46 @@
     android:padding="16dp"
     android:background="@drawable/sfondo">
 
-    <EditText
-        android:id="@+id/editTextDeckName"
-        android:hint="Nome set di carte"
-        android:layout_width="200dp"
+    <LinearLayout
+        android:id="@+id/deckNameContainer"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_marginTop="30dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/textCardCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0 carte"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginEnd="12dp"
+            android:layout_marginStart="60dp"/>
+
+        <EditText
+            android:id="@+id/editTextDeckName"
+            android:hint="Nome set di carte"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="21sp"/>
+    </LinearLayout>
 
 
     <Button
         android:id="@+id/buttonAddFlashcard"
-        android:text="Aggiungi carta"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:background="@color/asparagus"
-        app:layout_constraintTop_toBottomOf="@id/editTextDeckName"
+        android:text="Aggiungi carta"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/deckNameContainer" />
 
 
     <androidx.recyclerview.widget.RecyclerView

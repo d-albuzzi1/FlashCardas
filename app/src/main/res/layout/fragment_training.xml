@@ -51,6 +51,18 @@
         android:layout_marginTop="70dp"
         android:contentDescription="Decorazione sinistra"/>
 
+    <TextView
+        android:id="@+id/card_counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="80dp"
+        android:text="0/0"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginEnd="10dp"/>
+
     <!-- Immagine a destra -->
     <ImageView
         android:id="@+id/green_arrow"
@@ -58,7 +70,7 @@
         android:layout_height="64dp"
         android:src="@drawable/freccia_verde_dx"
         android:layout_gravity="end"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="22dp"
         android:layout_marginTop="70dp"
         android:contentDescription="Decorazione destra"/>
 

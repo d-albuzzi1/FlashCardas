@@ -45,10 +45,12 @@ public class TrainingFragment extends Fragment {
     private Set<Flashcard> knownFlashcards = new HashSet<>();
     private List<Flashcard> remaining = new ArrayList<>();
 
+
     private int currentIndex = 0;
     private boolean showingWord = true;
     private TextView wordText;
     private TextView translationText;
+    private TextView cardCounter;
     private ImageView red_arrow;
     private ImageView green_arrow;
     private View cardView;
@@ -95,6 +97,8 @@ public class TrainingFragment extends Fragment {
         restartButton = view.findViewById(R.id.button_restart);
         green_arrow = view.findViewById(R.id.green_arrow);
         red_arrow = view.findViewById(R.id.red_arrow);
+        cardCounter = view.findViewById(R.id.card_counter);
+
 
         deckViewModel = new ViewModelProvider(requireActivity()).get(DeckViewModel.class);
 
@@ -113,12 +117,17 @@ public class TrainingFragment extends Fragment {
                 .filter(card -> !knownFlashcards.contains(card))
                 .collect(Collectors.toList());
 
+
+        cardCounter.setText((allFlashcards.size() - remaining.size()) + "/" + allFlashcards.size());
+
+
         if (remaining.isEmpty()) {
             // Nascondi la card, mostra messaggio e bottone
             cardView.setVisibility(View.GONE);
             translationText.setVisibility(View.GONE);
             red_arrow.setVisibility(View.GONE);
             green_arrow.setVisibility(View.GONE);
+            cardCounter.setVisibility(View.GONE);
 
             finishLayout.setVisibility(View.VISIBLE);
             restartButton.setVisibility(View.VISIBLE);
@@ -128,6 +137,7 @@ public class TrainingFragment extends Fragment {
         red_arrow.setVisibility(View.VISIBLE);
         green_arrow.setVisibility(View.VISIBLE);
         cardView.setVisibility(View.VISIBLE);
+        cardCounter.setVisibility(View.VISIBLE);
         finishLayout.setVisibility(View.GONE);
         restartButton.setVisibility(View.GONE);
 
@@ -142,6 +152,7 @@ public class TrainingFragment extends Fragment {
     private void restartTraining() {
         knownFlashcards.clear();
         currentIndex = 0;
+        cardCounter.setText("0/" + allFlashcards.size());
         showNextCard();
     }
 

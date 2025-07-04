@@ -56,10 +56,10 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
             case "Home":
                 mainViewModel.setCurrentFragment(new HomeFragment());
                 return true;
-            case "Training":
+            case "Test":
                 mainViewModel.setCurrentFragment(new TrainingFragment());
                 return true;
-            case "Manage":
+            case "Gestione mazzi":
                 mainViewModel.setCurrentFragment(new ManageDecksFragment());
                 return true;
             default:

@@ -6,9 +6,9 @@
     <item
         android:id="@+id/nav_training"
         android:icon="@drawable/card_collection"
-        android:title="Training" />
+        android:title="Test" />
     <item
         android:id="@+id/nav_manage"
         android:icon="@drawable/card_plus"
-        android:title="Manage" />
+        android:title="Gestione mazzi" />
 </menu>
