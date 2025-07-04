@@ -2,12 +2,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@drawable/sfondo">
 
     <EditText
         android:id="@+id/editTextDeckName"
-        android:hint="Deck Name"
-        android:layout_width="0dp"
+        android:hint="Nome set di carte"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -17,13 +18,14 @@
 
     <Button
         android:id="@+id/buttonAddFlashcard"
-        android:text="Add Flashcard"
+        android:text="Aggiungi carta"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:background="@color/asparagus"
         app:layout_constraintTop_toBottomOf="@id/editTextDeckName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -34,11 +36,14 @@
         app:layout_constraintTop_toBottomOf="@id/buttonAddFlashcard"
         app:layout_constraintBottom_toTopOf="@id/buttonSaveDeck"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/elenco_flahscard"
+        android:padding="60dp"/>
 
     <Button
         android:id="@+id/buttonSaveDeck"
-        android:text="Save Deck"
+        android:text="Salva il set!"
+        android:background="@color/asparagus"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

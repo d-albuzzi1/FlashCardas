@@ -3,17 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D0D3D0">
+    android:background="@drawable/sfondo">
+
 
     <TextView
         android:id="@+id/textDeck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:padding="20dp"
         android:text="I tuoi mazzi:"
         android:textColor="@color/black"
         android:textSize="25sp"
-        android:padding="10dp"
-        android:layout_marginTop="30dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,31 +24,25 @@
         android:id="@+id/accountImage"
         android:layout_width="55dp"
         android:layout_height="55dp"
+        android:layout_marginTop="15dp"
         android:src="@drawable/baseline_account_box_24"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewDecks"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="30dp"
         android:paddingStart="40dp"
         android:paddingEnd="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textDeck" />
 
-    <ImageView
-        android:id="@+id/graphImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/grafico_esempio"
-        app:layout_constraintTop_toBottomOf="@id/recyclerViewDecks"
-        android:layout_marginTop="100dp"/>
+
 
 
 

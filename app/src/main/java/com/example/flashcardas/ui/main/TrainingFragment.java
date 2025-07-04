@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -37,6 +38,8 @@ public class TrainingFragment extends Fragment {
     private boolean showingWord = true;
     private TextView wordText;
     private TextView translationText;
+    private ImageView red_arrow;
+    private ImageView green_arrow;
     private View cardView;
     private View finishLayout;
     private View restartButton;
@@ -79,6 +82,8 @@ public class TrainingFragment extends Fragment {
         cardView = view.findViewById(R.id.flashcard_view);
         finishLayout = view.findViewById(R.id.finish_layout);
         restartButton = view.findViewById(R.id.button_restart);
+        green_arrow = view.findViewById(R.id.green_arrow);
+        red_arrow = view.findViewById(R.id.red_arrow);
 
         deckViewModel = new ViewModelProvider(requireActivity()).get(DeckViewModel.class);
 
@@ -101,11 +106,16 @@ public class TrainingFragment extends Fragment {
             // Nascondi la card, mostra messaggio e bottone
             cardView.setVisibility(View.GONE);
             translationText.setVisibility(View.GONE);
+            red_arrow.setVisibility(View.GONE);
+            green_arrow.setVisibility(View.GONE);
+
             finishLayout.setVisibility(View.VISIBLE);
             restartButton.setVisibility(View.VISIBLE);
             return;
         }
 
+        red_arrow.setVisibility(View.VISIBLE);
+        green_arrow.setVisibility(View.VISIBLE);
         cardView.setVisibility(View.VISIBLE);
         finishLayout.setVisibility(View.GONE);
         restartButton.setVisibility(View.GONE);

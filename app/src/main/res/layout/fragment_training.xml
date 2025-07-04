@@ -2,18 +2,19 @@
     android:id="@+id/card_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="@drawable/sfondo">
 
     <!-- La flashcard -->
     <LinearLayout
         android:id="@+id/flashcard_view"
         android:layout_width="300dp"
-        android:layout_height="500dp"
+        android:layout_height="480dp"
         android:layout_gravity="center"
         android:orientation="vertical"
         android:gravity="center"
-        android:background="@color/green"
+        android:background="@drawable/flashcard_back"
         android:padding="16dp"
+        android:layout_marginTop="20dp"
         android:elevation="8dp">
 
         <TextView
@@ -35,31 +36,79 @@
             android:visibility="gone"
             android:layout_marginTop="16dp"/>
     </LinearLayout>
+    <!-- Immagine a sinistra -->
+    <ImageView
+        android:id="@+id/red_arrow"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/freccia_rossa_sx"
+        android:layout_gravity="start"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        android:contentDescription="Decorazione sinistra"/>
+
+    <!-- Immagine a destra -->
+    <ImageView
+        android:id="@+id/green_arrow"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/freccia_verde_dx"
+        android:layout_gravity="end"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="40dp"
+        android:contentDescription="Decorazione destra"/>
 
     <!-- Messaggio fine -->
-    <LinearLayout
+
+    <FrameLayout
         android:id="@+id/finish_layout"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
+        android:layout_width="350dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
         android:visibility="gone">
 
-        <TextView
-            android:id="@+id/text_finish_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Congratulazioni, hai finito!"
-            android:textSize="24sp"
-            android:textColor="@android:color/holo_green_dark"
-            android:gravity="center"/>
+        <!-- Immagine di sfondo -->
+        <ImageView
+            android:id="@+id/finish_background"
+            android:layout_width="350dp"
+            android:layout_height="250dp"
+            android:scaleType="centerCrop"
+            android:scaleX="1.3"
+            android:scaleY="1.3"
+            android:src="@drawable/finish_image"
+            android:contentDescription="Sfondo fine" />
 
-        <Button
-            android:id="@+id/button_restart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ricomincia"
-            android:layout_marginTop="24dp"/>
-    </LinearLayout>
+        <!-- Testi sopra l'immagine -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="24dp">
+
+            <TextView
+                android:id="@+id/text_finish_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Congratulazioni, hai finito!"
+                android:textSize="20sp"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginBottom="24dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"/>
+
+            <Button
+                android:id="@+id/button_restart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Ricomincia"
+                android:background="#9EC692"/>
+        </LinearLayout>
+    </FrameLayout>
+
+
 
 </FrameLayout>
