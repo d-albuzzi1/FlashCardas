@@ -1,4 +1,4 @@
-# FlashcardAs - App Android per lo studio con flashcard
+# Flashcardas - App Android per lo studio con flashcard
 
 ## Introduzione
 
