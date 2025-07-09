@@ -1,0 +1,58 @@
+package com.example.flashcardas.views.welcome;
+
+import android.content.Intent;
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.example.flashcardas.R;
+import com.example.flashcardas.views.main.MainActivity;
+import com.example.flashcardas.viewmodel.AuthViewModel;
+
+/**
+ * Activity di benvenuto che gestisce il flusso di autenticazione.
+ *
+ * - Controlla se l'utente è già loggato e, in tal caso, avvia MainActivity.
+ * - Carica il fragment di login o registrazione in base all'intent ricevuto.
+ * - Se nessun fragment specificato, carica di default il LoginFragment.
+ */
+
+
+public class WelcomeActivity extends AppCompatActivity {
+    private AuthViewModel authViewModel;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Cntrollo se l'utente è gia loggato
+        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+        if (authViewModel.isUserLoggedIn()) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+        setContentView(R.layout.activity_welcome);
+
+        String fragmentType = getIntent().getStringExtra("FRAGMENT_TYPE");
+
+        if (fragmentType != null) {
+            if (fragmentType.equals("login")) {
+                loadFragment(new LoginFragment());
+            } else if (fragmentType.equals("register")) {
+                loadFragment(new RegisterFragment());
+            }
+        }else{
+           loadFragment(new LoginFragment());
+        }
+
+    }
+
+    private void loadFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.authFragmentContainer, fragment)
+                .commit();
+    }
+}

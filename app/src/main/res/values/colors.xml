@@ -5,6 +5,18 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="light_blue">#AACAD5</color>
+    <color name="moonstone">#58A4B0</color>
+    <color name="keppel">#68B4A3</color>
+    <color name="mint">#78C395</color>
+    <color name="light_green">#98E27A</color>
+    <color name="asparagus">#6DA05F</color>
+    <color name="hunter_green">#415D43</color>
+    <color name="brunswick_green">#355547</color>
+    <color name="dark_slate_grey">#294D4A</color>
+
 </resources>

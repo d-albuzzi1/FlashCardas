@@ -1,0 +1,130 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/sfondo">
+
+    <!-- La flashcard -->
+    <LinearLayout
+        android:id="@+id/flashcard_view"
+        android:layout_width="300dp"
+        android:layout_height="480dp"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@drawable/flashcard"
+        android:padding="16dp"
+        android:layout_marginTop="20dp"
+        android:elevation="8dp"
+        >
+
+        <TextView
+            android:id="@+id/flashcard_word"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Word"
+            android:textSize="24sp"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:layout_marginEnd="10dp"/>
+
+        <TextView
+            android:id="@+id/text_translation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Translation"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"
+            android:visibility="gone"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="10dp"/>
+
+    </LinearLayout>
+    <!-- Immagine a sinistra -->
+    <ImageView
+        android:id="@+id/red_arrow"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/freccia_rossa_sx"
+        android:layout_gravity="start"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="70dp"
+        android:contentDescription="Decorazione sinistra"/>
+
+    <TextView
+        android:id="@+id/card_counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="80dp"
+        android:text="0/0"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginEnd="10dp"/>
+
+    <!-- Immagine a destra -->
+    <ImageView
+        android:id="@+id/green_arrow"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/freccia_verde_dx"
+        android:layout_gravity="end"
+        android:layout_marginEnd="22dp"
+        android:layout_marginTop="70dp"
+        android:contentDescription="Decorazione destra"/>
+
+    <!-- Messaggio fine -->
+
+    <FrameLayout
+        android:id="@+id/finish_layout"
+        android:layout_width="350dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        android:visibility="gone">
+
+        <!-- Immagine di sfondo -->
+        <ImageView
+            android:id="@+id/finish_background"
+            android:layout_width="350dp"
+            android:layout_height="250dp"
+            android:scaleType="centerCrop"
+            android:scaleX="1.3"
+            android:scaleY="1.3"
+            android:src="@drawable/finish_image"
+            android:contentDescription="Sfondo fine" />
+
+        <!-- Testi sopra l'immagine -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="24dp">
+
+            <TextView
+                android:id="@+id/text_finish_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Congratulazioni, hai finito!"
+                android:textSize="20sp"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginBottom="24dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"/>
+
+            <Button
+                android:id="@+id/button_restart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Ricomincia"
+                android:background="#9EC692"/>
+        </LinearLayout>
+    </FrameLayout>
+
+
+
+</FrameLayout>
