@@ -13,7 +13,7 @@
         android:theme="@style/Theme.FlashCardas"
         tools:targetApi="31">
         <activity
-            android:name="com.example.flashcardas.ui.welcome.WelcomeActivity"
+            android:name="com.example.flashcardas.views.welcome.WelcomeActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.FlashCardas">
@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name=".views.main.MainActivity"
             android:windowSoftInputMode="adjustPan"
         />
     </application>

@@ -1,4 +1,4 @@
-package com.example.flashcardas.ui.main;
+package com.example.flashcardas.views.main;
 
 import static com.example.flashcardas.utils.IdUtils.generateId;
 
@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.flashcardas.R;
 import com.example.flashcardas.model.Deck;
 import com.example.flashcardas.model.Flashcard;
-import com.example.flashcardas.ui.adapter.DeckEditAdapter;
+import com.example.flashcardas.views.adapter.DeckEditAdapter;
 import com.example.flashcardas.viewmodel.DeckViewModel;
 
 import java.util.ArrayList;

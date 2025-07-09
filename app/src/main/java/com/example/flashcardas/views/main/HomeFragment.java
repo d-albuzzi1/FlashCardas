@@ -1,4 +1,4 @@
-package com.example.flashcardas.ui.main;
+package com.example.flashcardas.views.main;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -16,8 +16,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.flashcardas.R;
-import com.example.flashcardas.ui.adapter.HomeDeckAdapter;
-import com.example.flashcardas.ui.welcome.WelcomeActivity;
+import com.example.flashcardas.views.adapter.HomeDeckAdapter;
+import com.example.flashcardas.views.welcome.WelcomeActivity;
 import com.example.flashcardas.viewmodel.AuthViewModel;
 import com.example.flashcardas.viewmodel.DeckViewModel;
 

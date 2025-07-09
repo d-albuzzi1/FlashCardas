@@ -1,4 +1,4 @@
-package com.example.flashcardas.ui.main;
+package com.example.flashcardas.views.main;
 
 import android.os.Bundle;
 import android.view.GestureDetector;

@@ -1,4 +1,4 @@
-package com.example.flashcardas.ui.main;
+package com.example.flashcardas.views.main;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flashcardas.R;
 import com.example.flashcardas.model.Deck;
-import com.example.flashcardas.ui.adapter.ManageDeckAdapter;
+import com.example.flashcardas.views.adapter.ManageDeckAdapter;
 import com.example.flashcardas.viewmodel.DeckViewModel;
 
 import java.util.ArrayList;

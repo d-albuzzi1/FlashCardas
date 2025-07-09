@@ -1,4 +1,4 @@
-package com.example.flashcardas.ui.welcome;
+package com.example.flashcardas.views.welcome;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.flashcardas.R;
-import com.example.flashcardas.ui.main.MainActivity;
+import com.example.flashcardas.views.main.MainActivity;
 import com.example.flashcardas.viewmodel.AuthViewModel;
 
 /**

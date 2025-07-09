@@ -6,19 +6,19 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.flashcardas.ui.main.HomeFragment"
+        android:name="com.example.flashcardas.views.main.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_training"
-        android:name="com.example.flashcardas.ui.main.TrainingFragment"
+        android:name="com.example.flashcardas.views.main.TrainingFragment"
         android:label="Training"
         tools:layout="@layout/fragment_training" />
 
     <fragment
         android:id="@+id/nav_manage"
-        android:name="com.example.flashcardas.ui.main.ManageDecksFragment"
+        android:name="com.example.flashcardas.views.main.ManageDecksFragment"
         android:label="Manage"
         tools:layout="@layout/fragment_manage_decks" />
 </navigation>

@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.flashcardas.ui.main.HomeFragment;
+import com.example.flashcardas.views.main.HomeFragment;
 
 /**
  * ViewModel per gestire il Fragment attualmente visualizzato nell'app.

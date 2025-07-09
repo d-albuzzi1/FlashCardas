@@ -1,4 +1,4 @@
-package com.example.flashcardas.ui.adapter;
+package com.example.flashcardas.views.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
